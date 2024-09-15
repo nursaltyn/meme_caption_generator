@@ -28,6 +28,7 @@ def save_image_with_unique_name(image, path):
     print(f"Image saved as: {unique_path}")
     
 def find_text_in_answer(text):
+    print("Full caption:", text)
     text = text.split("Caption:")[1]
     text = text.replace("\n", "")
     text = text.replace("model", "")
@@ -36,7 +37,7 @@ def find_text_in_answer(text):
     
     # Remove non-alphanumeric characters (keeping spaces)
     text = re.sub(r'[^a-zA-Z0-9\?\!\s]', '', text)
-    # print("Filtered caption:", text)
+    print("Filtered caption:", text)
     if text:
         return text
     else:

@@ -75,6 +75,5 @@ def get_model_caption(img_path, base_model, tokenizer, hf_token, device='cuda'):
     base_model.set_adapter(sentiment)
     base_model.to(device)
     generated_ids = base_model.generate(**model_inputs, max_new_tokens=20, do_sample=True, pad_token_id=tokenizer.eos_token_id)
-    # decoded = tokenizer.batch_decode(generated_ids)
     decoded = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
     return (decoded)

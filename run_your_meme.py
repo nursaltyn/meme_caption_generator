@@ -14,7 +14,7 @@ from utils.image_utils import overlay_caption
 
 
 def generate_meme_from_image(img_path, base_model, tokenizer, hf_token, output_dir, device='cuda'):
-  caption = get_model_caption(img_path, hf_token)
+  caption = get_model_caption(img_path, base_model, tokenizer, hf_token)
   image = overlay_caption(caption, img_path, output_dir)
   return image, caption
   
@@ -51,6 +51,6 @@ if __name__ == '__main__':
                                               args.hf_token,
                                               args.output_dir, 
                                               device=device)
-    
-    print(image)
+    image.show()
+    # print(image)
 
