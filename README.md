@@ -8,20 +8,6 @@ Welcome to the meme caption generator!
 
 The structure of this repo is as follows:
 
-my-project/ ├── data/ │ ├── raw/ │ └── processed/ ├── notebooks/ ├── scripts/ └── README.md
-
-my-project/
-├── data/
-│ ├── raw/
-│ │ └── README.md
-│ ├── processed/
-│ │ └── README.md
-├── notebooks/
-│ └── README.md
-├── scripts/
-│ └── README.md
-└── README.md
-
 meme_caption_generator/
 ├── experiments/
 │ ├── raw/
@@ -45,9 +31,8 @@ For training the models, we used memes_900k dataset, which is available here: {l
 
 In this project, I am using two different approaches to generate meme captions.
 
-1.
-
-I noti
+1. Prompt a larger model with sentiment and in-context learning.
+2.
 
 ## Explanation of the first approach.
 
@@ -112,11 +97,43 @@ The expected outcome in this approach is that it can generalize well to differen
 
 As you probably noticed, a shortcoming of the sentiment approach is that it doesn't care about details in the context. E.g., if you input an image of a smiling doctor or an image of a smiling dog, it might still produce the same caption (since the sentiment is "happy").
 
-To address that, we introduce another approach: training adapters that
+To address that, I introduce another approach: training adapters that learn specific genres of memes.
 
-Maybe can use it if we have templates already, find a similar template and produce a similar joke, but this seems not very useful and too rule based.
-In the meme dataset I used, there were different languages mixed, so need to stick to english.
+After looking through many datasets, I stopped at memes_900k. It contains 300 meme templates, each with 3000 captions available from different users.
+
+I label each of 300 meme templates with a sentiment (using CLIP).
+Then I focus only on two sentiments: "angry" and "happy" (purely because of time constraints).
+Within the memes with these sentiments, I choose templates that
+
+1. have the most recognizable form: This is done so that the model is able to learn the pattern better with fewer examples. Some meme captions differ too much from each other.
+2. are not too image-specific;
+3. don't require complex text overlay (e.g. "Me", )
+
+For "angry" memes, I choose templates "Y U No" and "Y U So". They express rage or irritation at some situation.
+For "happy" memes, I choose templates "If you know what I mean" and "tobey-maguire". They express happiness after doing or saying something sneaky.
+
+Note: in my opinion, "angry" adapters perform better, since they had a more consistent template for every caption, while "happy" memes captions were more diverse.
+
+After that, I want to teach the adapter to generate topic-specific captions. I want to create a dataset with topics as inputs and captions as outputs. The meme900k dataset provides captions, but not topics. Hence, I label topics for each caption using Llama-3-8B-Instruct Inference API. For each meme template, I manually label 10 random captions and provide them as examples to Llama.
+
+I labeled around 600 samples for each sentiment type due to query limit == 300/hour in Inference API.
+
+Then I train Gemma2B adapters with train-test split 80:20.
+
+Alternative approach could be simply taking hundreds/thousands of different templates, labeling their sentiments, then getting the image descriptions and passing to the model for training. However, this wouldn't fit in the time/resource constraints well, thus I do the bootstrapping.
+
+### Handling noise
+
+Memes900k dataset contained many captions in various languages, so I filtered only English captions using langdetect library.
+Unfortunately, there were captions that were offensive and inappropriate. Some captions were filtered by Gemma, as it refused to process them, however, there is no guarantee it detected every possible offensive statement.
+In production, I would do a safety-check for each caption training a classifier with high recall.
+
 Open ended generation seems difficult - a large search space of topics.
 Also many formars of the memes: POV, Me when, This feeling when, Nobody: , etc…
 
 Another challenge is that memes are often expressions of stances, especially those that don’t make sense without a text.
+
+### Limitations and future work
+
+Add more adapters for different sentiments
+Adapters for more templates - choose randomly - e.g. sad -> different templates
