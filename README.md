@@ -8,6 +8,8 @@ Welcome to the meme caption generator!
 
 The structure of this repo is as follows:
 
+my-project/ ├── data/ │ ├── raw/ │ └── processed/ ├── notebooks/ ├── scripts/ └── README.md
+
 my-project/
 ├── data/
 │ ├── raw/
