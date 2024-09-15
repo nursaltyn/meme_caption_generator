@@ -87,14 +87,32 @@ Some memes are self-content, they don’t need a text. We are talking specifical
 E.g. this doesn’t suit https://www.kaggle.com/datasets/sayangoswami/reddit-memes-dataset
 
 3. Another feature: the memes often have nothing to do with the background. Therefore, descriptions of the images might be not very helpful, or very vaguely. For example, a picture of a dog smiling might have tons of different captions - which have nothing to do with the dog itself. But what matters is the fact that it is a very positive picture, and this "vibe" can be exploited in describing many different situations.
-   Thus, my first approach was to detect the sentiment using a vision-language model. CLIP-base model performed well on this task zero-shot: https://huggingface.co/openai/clip-vit-base-patch32
 
-   I choose 10 labels for different emotions (because of limitations of possible label input in this CLIP version).
+For example, if the caption is: "POV: your face when you got your dream internship", it doesn't really matter if there is a smiling person on the image, or a smiling dog, or a smiling frog.
+
+Thus, my first approach was to detect the sentiment using a vision-language model. CLIP-base model performed well on this task zero-shot: https://huggingface.co/openai/clip-vit-base-patch32
+
+I choose 10 labels for different emotions (because of limitations of possible label input in this CLIP version).
 
 Choice of labels:
 American psychologist Paul Ekman identified six basic emotions: anger, disgust, fear, happiness, sadness and surprise.
 For the labels, I chose the following:
 Wallace V. Friesen and Phoebe C. Ellsworth worked with him on the same basic structure.[37] The emotions can be linked to facial expressions
+
+4. After choosing sentiments, I manually provide 10 examples of meme captions for each sentiment. This is necessary as there is no dataset available with a fine-grained labeled sentiments of memes (or labels are not the same as we want).
+
+   This way, my model is able to do in-context learning. I choose open-source LLaMA-3-8B (instruction-tuned) due to its relatively small size and good balance between creativity and sticking to the in-context examples. However, any other bigger model can be utilized.
+
+I choose to give captions in the same format: "POV: ..."
+This is done to achieve a more predictable behavior of the model and make it easier to parse the model's output.
+
+The expected outcome in this approach is that it can generalize well to different images.
+
+## Second approach: training adapters
+
+As you probably noticed, a shortcoming of the sentiment approach is that it doesn't care about details in the context. E.g., if you input an image of a smiling doctor or an image of a smiling dog, it might still produce the same caption (since the sentiment is "happy").
+
+To address that, we introduce another approach: training adapters that
 
 Maybe can use it if we have templates already, find a similar template and produce a similar joke, but this seems not very useful and too rule based.
 In the meme dataset I used, there were different languages mixed, so need to stick to english.
