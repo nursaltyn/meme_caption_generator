@@ -59,7 +59,11 @@ This inconvenience will be fixed in the future.
 
 3) Please make sure you have installed the requirements to avoid compatibility problems:
 ```
-requirements.txt
+# Windows users
+pip install -r requirements.txt
+
+# Mac users
+pip install -r requirements_mac.txt
 ```
 
 4) While you are in the "meme_caption_generator" folder, run:
@@ -89,15 +93,31 @@ https://huggingface.co/spaces/NursNurs/Meme-caption-generator/tree/main
 When you are in the Meme-caption-generator folder, run:
 
 ```
+git lfs install
+
+git clone https://huggingface.co/spaces/NursNurs/Meme-caption-generator
+
+pip install streamlit
+
+# it's better to create a new environment to avoid incompatibilities
+pip install -r requirements.txt
+
 streamlit run app.py
 ```
+This is how the interface should look for you:
+
+![img1](streamlit1.png)
+![img2](streamlit2.png)
+
+
+**Warning**: we faced issues with the libraries in the requirements.txt when switching from different devices. We apologize for the possible issues; what worked for us was installing the requirements.txt and then manually fixing the libraries that caused problems.
 
 ## Potential errors you might get (but hopefully won't)
 
 - Since we use Inference API for some HuggingFace models, there might be two potential errors:
    - The model isn't loaded yet (usually the first time you prompt it; later this error disappears)
    - You've reached the query limit (300 queries/hour). 
-- In the requirement.txt, some libraries might be missing. We are working on fixing that and apologize for possible inconveniences.
+- In the requirement.txt, some libraries are problematic to download and some are not used later on. We are working on fixing that and sincerely apologize for possible inconveniences.
 
 ## Other notes
 
