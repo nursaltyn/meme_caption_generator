@@ -2,7 +2,7 @@
 
 A program that generates memes based on the input image
 
-Welcome to the meme caption generator!
+# Welcome to the meme caption generator!
 
 ## Repository structure
 
@@ -10,16 +10,16 @@ The structure of this repo is as follows:
 
 ```
 meme_caption_generator/
-├── experiments/
-├── fonts/
-├── memes_900k_files/
-├── my_fun_results/
-├── test_images/
-├── utils/
+├── notebooks/ 
+├── fonts/                             #fonts for meme captions
+├── memes_900k_files/                  #files used for training
+├── my_fun_results/                    #some of my results
+├── test_images/                       #some templates you might want to use
+├── utils/           
 ├── requirements.txt
-├── run_your_meme.py
-├── walk_through_notebook.ipynb
-└── README.md
+├── run_your_meme.py                   #a script to get your meme
+├── walk_through_notebook.ipynb        
+└── README.md  
 ```
 
 ## About
@@ -53,7 +53,11 @@ python run_your_meme.py --img_path YOUR_FULL_IMAGE_PATH --hf_token hf_YOUR_TOKEN
 
 If you are not sure, which image to run, you can use "test_images" folder to get inspiration. Some templates are available there.
 
+3) By default, you will see the result meme in the folder "result_memes/gemma". If you want to receive memes in a different folder, you can path it in the optional argument "output_dir":   
 
+```
+python run_your_meme.py --img_path YOUR_FULL_IMAGE_PATH --hf_token hf_YOUR_TOKEN --output_dir YOUR_OUTPUT_PATH
+```
 
 In the experiments folder, there
 In the fonts folder, you can load fonts which you want to use for meme generation. The default font we use is Anton.

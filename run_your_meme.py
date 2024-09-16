@@ -35,7 +35,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--img_path", required=True) 
     parser.add_argument("--hf_token", required=True)
-    parser.add_argument("--force_mood", type=str, help='["happy", "angry"]', required=False) # if you want to generate specific mood of memes
+    # parser.add_argument("--force_mood", type=str, help='["happy", "angry"]', required=False) # if you want to generate specific mood of memes
     parser.add_argument("--output_dir", required=False, default= r'result_memes/gemma')
     
     args = parser.parse_args()
@@ -53,6 +53,3 @@ if __name__ == '__main__':
                                               device=device)
     image.show()
    
-
-
-# python run_your_meme.py --img_path C:\Users\Nursulu_1\Downloads\BMW_intern_GenAI_coding_task\BMW_intern_GenAI_coding_task\meme_caption_generator\test_images\doctor.jpg --hf_token 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
