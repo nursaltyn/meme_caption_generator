@@ -52,5 +52,7 @@ if __name__ == '__main__':
                                               args.output_dir, 
                                               device=device)
     image.show()
-    # print(image)
+   
 
+
+# python run_your_meme.py --img_path C:\Users\Nursulu_1\Downloads\BMW_intern_GenAI_coding_task\BMW_intern_GenAI_coding_task\meme_caption_generator\test_images\doctor.jpg --hf_token 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

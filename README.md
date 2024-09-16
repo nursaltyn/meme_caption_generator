@@ -8,10 +8,9 @@ Welcome to the meme caption generator!
 
 The structure of this repo is as follows:
 
+```
 meme_caption_generator/
 ├── experiments/
-│ ├── raw/
-│ └── processed/
 ├── fonts/
 ├── memes_900k_files/
 ├── my_fun_results/
@@ -21,6 +20,12 @@ meme_caption_generator/
 ├── run_your_meme.py
 ├── walk_through_notebook.ipynb
 └── README.md
+```
+
+## How to get my meme?
+
+1. Clone this repository
+python run_your_meme.py --img_path C:\Users\Nursulu_1\Downloads\BMW_intern_GenAI_coding_task\BMW_intern_GenAI_coding_task\meme_caption_generator\test_images\doctor.jpg --hf_token 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
 
 In the experiments folder, there
 In the fonts folder, you can load fonts which you want to use for meme generation. The default font we use is Anton.
@@ -32,7 +37,12 @@ For training the models, we used memes_900k dataset, which is available here: {l
 In this project, I am using two different approaches to generate meme captions.
 
 1. Prompt a larger model with sentiment and in-context learning.
-2.
+2. Use Gemma-2B with customly trained adapters to generate specific genres/formats of memes.
+
+Gemma2B turned out to be a good compromise between size and performance. 
+With relatively few samples (300 to 500), I was able to train adapters. 
+
+Other models were also tried for the purpose of caption generation (e.g., FLAN-T5 family - large, XL, and XXL; ...), but they didn't achieve reliable performance neither before training nor after. Notebooks with prefix-tuning of FLAN-T5 are added in the folder.
 
 ## Explanation of the first approach.
 
@@ -120,6 +130,13 @@ I labeled around 600 samples for each sentiment type due to query limit == 300/h
 
 Then I train Gemma2B adapters with train-test split 80:20.
 
+I am using a Gemma model with 2 billion parameters + customly trained adapters.
+
+Gemma2B turned out to be a good compromise between size and performance. 
+With relatively few samples (300 to 500), I was able to train adapters. 
+
+Other models were also tried for the purpose of caption generation (e.g., FLAN-T5 family - large, XL, and XXL; ...), but they didn't achieve reliable performance neither before training nor after. Notebooks with prefix-tuning of FLAN-T5 are added in the folder.
+
 Alternative approach could be simply taking hundreds/thousands of different templates, labeling their sentiments, then getting the image descriptions and passing to the model for training. However, this wouldn't fit in the time/resource constraints well, thus I do the bootstrapping.
 
 ### Handling noise
@@ -137,3 +154,5 @@ Another challenge is that memes are often expressions of stances, especially tho
 
 Add more adapters for different sentiments
 Adapters for more templates - choose randomly - e.g. sad -> different templates
+
+The free option has a limited rate of queries per hour, which is 300. In the more advanced setting (e.g. in production with more GPUs), a model can be stored locally to avoid this limitation.
