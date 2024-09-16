@@ -22,22 +22,43 @@ meme_caption_generator/
 └── README.md
 ```
 
-## How to get my meme?
+## About
 
-1. Clone this repository
-python run_your_meme.py --img_path C:\Users\Nursulu_1\Downloads\BMW_intern_GenAI_coding_task\BMW_intern_GenAI_coding_task\meme_caption_generator\test_images\doctor.jpg --hf_token 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
+In this project, I am using two different approaches to generate meme captions.
+
+1. User input -> sentiment detection -> prompt LLaMA3-8B-Instruct with sentiment and in-context learning examples.
+2. User input -> sentiment+context detection -> prompt Gemma-2B with customly trained adapters to generate specific genres/formats of memes.
+
+## How to get your meme?
+
+1. For testing the first approach, please refer to this [Colab notebook](https://colab.research.google.com/drive/1IoiNmQLWkTSiMJDY0q_XFAgYuwlzOVko?usp=sharing).
+Please first make sure you have access to the [Drive folder](https://drive.google.com/drive/folders/1hLV_fUtwA_vmGImays2pMvvacc8xGqT_?usp=sharing), and then run the **Meme_caption_generator.ipynb** notebook. It will require:
+- an access to mount your drive
+- your HuggingFace API token
+
+2. For testing the second approach:
+
+1) Clone this repository to your Downloads folder: 
+```
+git clone https://github.com/nursaltyn/meme_caption_generator
+```
+You might download it in another folder, however, you might have to adjust some paths in some notebooks.
+This inconvenience will be fixed in the future.
+
+2) While you are in the "meme_caption_generator" folder, run:
+
+```
+python run_your_meme.py --img_path YOUR_FULL_IMAGE_PATH --hf_token hf_YOUR_TOKEN
+```
+
+If you are not sure, which image to run, you can use "test_images" folder to get inspiration. Some templates are available there.
+
+
 
 In the experiments folder, there
 In the fonts folder, you can load fonts which you want to use for meme generation. The default font we use is Anton.
 
 For training the models, we used memes_900k dataset, which is available here: {link}
-
-## Methods
-
-In this project, I am using two different approaches to generate meme captions.
-
-1. Prompt a larger model with sentiment and in-context learning.
-2. Use Gemma-2B with customly trained adapters to generate specific genres/formats of memes.
 
 Gemma2B turned out to be a good compromise between size and performance. 
 With relatively few samples (300 to 500), I was able to train adapters. 
