@@ -4,6 +4,20 @@ A program that generates memes based on the input image
 
 # Welcome to the meme caption generator!
 
+## About
+
+In this project, I am using two different approaches to generate meme captions.
+
+1. **Sentiment-based Caption Generation**
+
+User input -> sentiment detection -> prompt LLaMA3-8B-Instruct with sentiment and in-context learning examples.
+
+2. **Adapters imitating meme styles**
+User input -> sentiment+context detection -> prompt Gemma-2B with customly trained adapters to generate specific genres/formats of memes.
+
+Before you proceed with the code, I recommend having a look at the [project report](https://docs.google.com/document/d/1sfV_8dGUYDKhsDxamNgNgsKsxOrn2vAecXm-wvp5Uu0/edit) to get a higher-level overview of the whole pipeline.
+
+
 ## Repository structure
 
 The structure of this repo is as follows:
@@ -18,22 +32,9 @@ meme_caption_generator/
 ├── utils/           
 ├── requirements.txt
 ├── run_your_meme.py                   #a script to get your meme
-├── walk_through_notebook.ipynb        
+├── walk_through_notebook.ipynb        #a notebook that walks you through the main implementation
 └── README.md  
 ```
-
-## About
-
-In this project, I am using two different approaches to generate meme captions.
-
-1. **Sentiment-based Caption Generation**
-
-User input -> sentiment detection -> prompt LLaMA3-8B-Instruct with sentiment and in-context learning examples.
-
-2. **Adapters imitating meme styles**
-User input -> sentiment+context detection -> prompt Gemma-2B with customly trained adapters to generate specific genres/formats of memes.
-
-Before you proceed with the code, I recommend having a look at the [project report](https://docs.google.com/document/d/1sfV_8dGUYDKhsDxamNgNgsKsxOrn2vAecXm-wvp5Uu0/edit) to get a higher-level overview of the whole pipeline.
 
 ## How to get your meme?
 
