@@ -65,15 +65,14 @@ requirements.txt
 4) While you are in the "meme_caption_generator" folder, run:
 
 ```
+# Windows users
 python run_your_meme.py --img_path YOUR_FULL_IMAGE_PATH --hf_token hf_YOUR_TOKEN
+
+# Mac users
+python3 run_your_meme.py --img_path YOUR_FULL_IMAGE_PATH --hf_token hf_YOUR_TOKEN --device mps
 ```
 
 - If you are not sure, which image to run, you can use "test_images" folder to get inspiration. Some templates are available there.
-- FOR MAC users: add an argument --device mps when running the script:
-
-```
-python run_your_meme.py --img_path YOUR_FULL_IMAGE_PATH --hf_token hf_YOUR_TOKEN --device mps
-```
 
 5) By default, you will see the result meme in the folder "result_memes/gemma". If you want to receive memes in a different folder, you can path it in the optional argument "output_dir":   
 
