@@ -98,6 +98,9 @@ def calculate_text_height(caption, font, max_width):
     return draw_text(draw, caption, (0, 0), font, max_width)
 
 def add_caption(image_path, caption, output_path, top_margin=10, bottom_margin=10, max_caption_length=10, min_distance_from_bottom_mm=10):
+    """
+    Add a caption to the image.
+    """
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
     width, height = image.size
@@ -125,13 +128,10 @@ def add_caption(image_path, caption, output_path, top_margin=10, bottom_margin=1
     # Load a font
     font = ImageFont.truetype(r"fonts/Anton/Anton-Regular.ttf", font_size)
 
-    # Top caption
     top_caption_position = (width // 10, top_margin)
     draw_text(draw, top_caption, top_caption_position, font, width - 2 * (width // 10))
 
-    # Bottom caption
-    if bottom_caption:  # Draw bottom caption only if it's not empty
-        # Calculate the height of the bottom caption
+    if bottom_caption:  
         bottom_caption_height = calculate_text_height(bottom_caption, font, width - 2 * (width // 10))
         bottom_caption_position = (width // 10, height - min_distance_from_bottom_px - bottom_caption_height)
         draw_text(draw, bottom_caption, bottom_caption_position, font, width - 2 * (width // 10))

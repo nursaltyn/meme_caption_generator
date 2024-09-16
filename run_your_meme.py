@@ -37,6 +37,7 @@ if __name__ == '__main__':
     parser.add_argument("--hf_token", required=True)
     # parser.add_argument("--force_mood", type=str, help='["happy", "angry"]', required=False) # if you want to generate specific mood of memes
     parser.add_argument("--output_dir", required=False, default= r'result_memes/gemma')
+    parser.add_argument("--device", required=False, default='cuda')
     
     args = parser.parse_args()
 
@@ -50,6 +51,6 @@ if __name__ == '__main__':
                                               tokenizer, 
                                               args.hf_token,
                                               args.output_dir, 
-                                              device=device)
+                                              device=args.device)
     image.show()
    
