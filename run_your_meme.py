@@ -17,19 +17,7 @@ def generate_meme_from_image(img_path, base_model, tokenizer, hf_token, output_d
   caption = get_model_caption(img_path, base_model, tokenizer, hf_token)
   image = overlay_caption(caption, img_path, output_dir)
   return image, caption
-  
-base_model = AutoModelForCausalLM.from_pretrained("google/gemma-2b")
-tokenizer = AutoTokenizer.from_pretrained("google/gemma-2b")
-model_angry = PeftModel.from_pretrained(base_model, "NursNurs/outputs_gemma2b_angry")
-model_happy = PeftModel.from_pretrained(base_model, "NursNurs/outputs_gemma2b_happy")
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-base_model.to(device)
-model_happy.to(device)
-model_angry.to(device)
-
-base_model.load_adapter("NursNurs/outputs_gemma2b_happy", "happy")  
-base_model.load_adapter("NursNurs/outputs_gemma2b_angry", "angry")  
+ 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -45,6 +33,25 @@ if __name__ == '__main__':
     
     if "\\" in args.img_path:
         args.img_path = args.img_path.replace("\\", "/")
+        
+    if args.device == 'cuda':
+      device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    #if you are on Mac
+    elif args.device == 'mps':
+      device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+      
+    base_model = AutoModelForCausalLM.from_pretrained("google/gemma-2b")
+    tokenizer = AutoTokenizer.from_pretrained("google/gemma-2b")
+    model_angry = PeftModel.from_pretrained(base_model, "NursNurs/outputs_gemma2b_angry")
+    model_happy = PeftModel.from_pretrained(base_model, "NursNurs/outputs_gemma2b_happy")
+
+
+    base_model.to(device)
+    model_happy.to(device)
+    model_angry.to(device)
+
+    base_model.load_adapter("NursNurs/outputs_gemma2b_happy", "happy")  
+    base_model.load_adapter("NursNurs/outputs_gemma2b_angry", "angry") 
 
     image, caption = generate_meme_from_image(args.img_path, 
                                               base_model, 

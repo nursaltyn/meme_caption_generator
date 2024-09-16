@@ -37,7 +37,6 @@ Before you proceed with the code, I recommend having a look at the [project repo
 
 ## How to get your meme?
 
-
 1. For testing the first approach, please refer to this [Colab notebook](https://colab.research.google.com/drive/1IoiNmQLWkTSiMJDY0q_XFAgYuwlzOVko?usp=sharing).
 Please first make sure you have access to the [Drive folder](https://drive.google.com/drive/folders/1hLV_fUtwA_vmGImays2pMvvacc8xGqT_?usp=sharing), and then run the **Meme_caption_generator.ipynb** notebook. It will require:
 - an access to mount your drive
@@ -68,14 +67,18 @@ requirements.txt
 python run_your_meme.py --img_path YOUR_FULL_IMAGE_PATH --hf_token hf_YOUR_TOKEN
 ```
 
-If you are not sure, which image to run, you can use "test_images" folder to get inspiration. Some templates are available there.
+- If you are not sure, which image to run, you can use "test_images" folder to get inspiration. Some templates are available there.
+- FOR MAC users: add an argument --device mps when running the script:
 
-3) By default, you will see the result meme in the folder "result_memes/gemma". If you want to receive memes in a different folder, you can path it in the optional argument "output_dir":   
+```
+python run_your_meme.py --img_path YOUR_FULL_IMAGE_PATH --hf_token hf_YOUR_TOKEN --device mps
+```
+
+5) By default, you will see the result meme in the folder "result_memes/gemma". If you want to receive memes in a different folder, you can path it in the optional argument "output_dir":   
 
 ```
 python run_your_meme.py --img_path YOUR_FULL_IMAGE_PATH --hf_token hf_YOUR_TOKEN --output_dir YOUR_OUTPUT_PATH
 ```
-
 
 ## Web-application
 
@@ -83,19 +86,29 @@ You can also explore the web-interface on Streamlit. However, since we are using
 
 https://huggingface.co/spaces/NursNurs/Meme-caption-generator/tree/main
 
-### Potential errors you might get (but hopefully won't)
+When you are in the Meme-caption-generator folder, run:
+
+```
+streamlit run app.py
+```
+
+## Potential errors you might get (but hopefully won't)
 
 - Since we use Inference API for some HuggingFace models, there might be two potential errors:
    - The model isn't loaded yet (usually the first time you prompt it; later this error disappears)
    - You've reached the query limit (300 queries/hour). 
-- In the requirement.txt, some libraries might be missing
-- If you are on Mac, you would have to replace CUDA with mps
+- In the requirement.txt, some libraries might be missing. We are working on fixing that and apologize for possible inconveniences.
+
+## Other notes
 
 In the fonts folder, you can load fonts which you want to use for meme generation. The default font we use is Anton.
 
 For training the models, we used memes_900k dataset, which is available [here](https://drive.google.com/file/d/1j6YG3skamxA1-mdogC1kRjugFuOkHt_A/edit).
 
 
-## References
+## Resources
 
-- Dataset memes900k: Borovik, Ilya & Khabibullin, Bulat & Kniazev, Vladislav & Pichugin, Zakhar & Olaleke, Oluwafemi. (2020). DeepHumor: Image-Based Meme Generation Using Deep Learning. 10.13140/RG.2.2.14598.14400. 
+- Dataset memes900k: Borovik, Ilya & Khabibullin, Bulat & Kniazev, Vladislav & Pichugin, Zakhar & Olaleke, Oluwafemi. (2020). DeepHumor: Image-Based Meme Generation Using Deep Learning. 10.13140/RG.2.2.14598.14400.
+- https://huggingface.co/blog/gemma-peft (Gemma tuning)
+- https://medium.com/@samvardhan777/fine-tune-gemma-using-qlora-%EF%B8%8F-6b2f2e76dc55 (Gemma tuning)
+- https://colab.research.google.com/drive/1Ys44kVvmeZtnICzWz0xgpRnrIOjZAuxp?usp=sharing (running Llama efficiently with Unsloth library) 
