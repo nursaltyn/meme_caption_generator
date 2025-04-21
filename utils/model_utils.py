@@ -57,7 +57,9 @@ def get_description(img_path, hf_token):
         print("The model is not available right now due to query limits. Try running again now or within the next hour")
 
 
-def get_model_caption(img_path, base_model, tokenizer, hf_token, device='cuda'):
+def get_model_caption(img_path, base_model, tokenizer, hf_token, device='cpu'):
+    print("Getting the sentiment and context of the image... Device:", device)
+
     sentiment = get_sentiment(img_path, hf_token)
     description = get_description(img_path, hf_token)
     

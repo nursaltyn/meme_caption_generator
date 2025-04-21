@@ -13,7 +13,8 @@ from utils.model_utils import get_model_caption
 from utils.image_utils import overlay_caption
 
 
-def generate_meme_from_image(img_path, base_model, tokenizer, hf_token, output_dir, device='cuda'):
+def generate_meme_from_image(img_path, base_model, tokenizer, hf_token, output_dir, device='cpu'):
+  print("Using device: ", device)
   caption = get_model_caption(img_path, base_model, tokenizer, hf_token)
   image = overlay_caption(caption, img_path, output_dir)
   return image, caption
@@ -25,7 +26,7 @@ if __name__ == '__main__':
     parser.add_argument("--hf_token", required=True)
     # parser.add_argument("--force_mood", type=str, help='["happy", "angry"]', required=False) # if you want to generate specific mood of memes
     parser.add_argument("--output_dir", required=False, default= r'result_memes/gemma')
-    parser.add_argument("--device", required=False, default='cuda')
+    parser.add_argument("--device", required=False, default='cpu')
     
     args = parser.parse_args()
 
@@ -39,6 +40,8 @@ if __name__ == '__main__':
     #if you are on Mac
     elif args.device == 'mps':
       device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+    elif args.device =='cpu':
+      device = torch.device("cpu")
       
     base_model = AutoModelForCausalLM.from_pretrained("google/gemma-2b")
     tokenizer = AutoTokenizer.from_pretrained("google/gemma-2b")
