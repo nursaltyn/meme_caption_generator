@@ -7,6 +7,10 @@ import textwrap
 def get_unique_filename(filename):
     """
     Generate a unique filename by appending a number if a file with the same name already exists.
+    Args:
+        filename (str): The original filename.
+    Returns:
+        str: A unique filename.
     """
     if not os.path.exists(filename):
         return filename
@@ -23,11 +27,26 @@ def get_unique_filename(filename):
 
 
 def save_image_with_unique_name(image, path):
+    """
+    Save the image with a unique filename.
+    Args:
+        image (PIL.Image): The image to save.
+        path (str): The path where the image will be saved.
+    Returns:
+        None
+    """
     unique_path = get_unique_filename(path)
     image.save(unique_path)
     print(f"Image saved as: {unique_path}")
     
 def find_text_in_answer(text):
+    """
+    Find the meme caption in the model's answer.
+    Args:
+        text (str): The text to search in.
+    Returns:
+        str: The filtered meme caption.
+    """
     print("Full caption:", text)
     text = text.split("Caption:")[1]
     text = text.replace("\n", "")
